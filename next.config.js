@@ -8,13 +8,19 @@ const withPWA = require('next-pwa')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'export',
+  trailingSlash: true,
   images: {
-    domains: ['picsum.photos'],
+    unoptimized: true, // substitui o otimizador, que não existe em site estático
+    domains: ['picsum.photos'], // pode remover se não usar mais
   },
   compiler: {
     styledComponents: true,
   },
   swcMinify: true,
+  // Só se o repo NÃO for <usuario>.github.io:
+  // basePath: '/nome-do-repo',
+  // assetPrefix: '/nome-do-repo/',
 };
 
 module.exports = withPWA(nextConfig);

@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Toggle /> should render correctly 1`] = `
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.c0 {
+  all: unset;
+  position: fixed;
+  right: calc(4rem / 2);
+  z-index: 50;
+}
+
+.c2 {
+  width: 2.7rem;
+  height: 3px;
+  border-radius: 2px;
+  background-color: var(--color-text);
+}
+
+<button
+  aria-label="Open menu"
+  class="c0"
+  type="button"
+>
+  <div
+    class="c1"
+  >
+    <span
+      class="c2"
+    />
+    <span
+      class="c2"
+    />
+  </div>
+</button>
+`;

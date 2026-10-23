@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>João Vitor Resende</title>
+        <link>https://SEU-SITE.com</link>
+        <description>Full-stack software engineer based in Brazil and focused on backend solutions.</description>
+        <lastBuildDate>Fri, 23 Oct 2026 12:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>Feed for Node.js</generator>
+        <image>
+            <title>João Vitor Resende</title>
+            <url>https://SEU-SITE.com/img/icon-512.png</url>
+            <link>https://SEU-SITE.com</link>
+        </image>
+        <copyright></copyright>
+    </channel>
+</rss>

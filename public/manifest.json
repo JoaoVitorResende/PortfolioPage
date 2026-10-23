@@ -1,0 +1,23 @@
+{
+  "name": "joao",
+  "short_name": "joao.",
+  "icons": [
+    {
+      "src": "/img/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/img/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable any"
+    }
+  ],
+  "theme_color": "#107BEB",
+  "background_color": "#151718",
+  "start_url": "/",
+  "description": "Full-stack software engineer based in Brazil and focused on web solutions",
+  "display": "fullscreen"
+}

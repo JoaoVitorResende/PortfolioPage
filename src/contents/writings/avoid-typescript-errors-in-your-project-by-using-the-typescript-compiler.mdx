@@ -1,0 +1,172 @@
+---
+title: 'Avoid TypeScript errors in your project by using the TypeScript compiler'
+publishedAt: '2022-05-27'
+excerpt: 'No more unexpected type errors!'
+cover:
+  url: '/img/contents/writings/avoid-typescript-errors-in-your-project-by-using-the-typescript-compiler/cover.png'
+  alt: 'Close-up of working engine of huge industrial machine with rotating shafts inside distribution warehouse or workshop'
+  caption: 'Working engine of huge industrial machine by <a href="https://unsplash.com/plus" target="_blank">Unsplash+</a> on <a href="https://unsplash.com/" target="_blank">Unsplash</a>.'
+tags: 'React,JavaScript,TypeScript'
+---
+
+## Introduction
+
+Let's suppose you have a large TypeScript project with a lot of features. In this project, you are tasked with refactoring one of the most important component in your entire application: the user registration form (assuming you are using React), which is an extremely detailed and vitally important feature in your application.
+
+Alright, you have done it, you refactored everything and... now there are a lot of TypeScript errors because the types of props that this component receives are different from all of the usages of this component in your app. How do you find all your usages easily?
+
+Sure you can use the good old `Cmd+Shift+F` or `Ctrl+Shift+F`, but there's another easier and better way to do this.
+
+To fix this, we can use **`tsc`**. The good thing about `tsc` is that you can use it to maintain the integrity of your project and keep it free from errors.
+
+## First of all, what is `tsc`?
+
+Assuming you are new to TypeScript, `tsc` is The TypeScript Compiler. It is a tool responsible for turning your TypeScript (which is a superset of JS) code into plain JavaScript. Since, as of today, browsers only understand JavaScript code, `tsc` makes your TS code readable by browsers.
+
+## Alright, how do we use it?
+
+Assuming you already have a TypeScript project with a `tsconfig.json` file and also a `package.json` file, add a `scripts` property if there isn't one yet.
+
+```json
+...
+"scripts": {
+  ...
+},
+...
+```
+
+It'll be here where we will add our `typecheck` command:
+
+
+```json
+...
+"scripts": {
+  "typecheck": "tsc --project tsconfig.json --noEmit",
+},
+...
+```
+
+Alright, now let's go over this command:
+
+1. First, we execute the `tsc` compiler
+2. We pass the --project flag to explicitly tell the compiler that we want to typecheck the entire project using our specified config file, which is the tsconfig.json.
+3. Lastly, we pass the --noEmit flag to say that we do not want to output the compiled JS files into our project. If we don't set this flag and, for example, we have a TS file located at `src/utils/boolToText.ts`, there would be created a file called `src/utils/boolToText.js`, which is the JavaScript version of the `src/utils/boolToText.ts` file outputted by the compiler.
+
+If there are no TS errors in your code, you should see something like this:
+
+![Typecheck command with no errors](/img/contents/writings/avoid-typescript-errors-in-your-project-by-using-the-typescript-compiler/typecheck-no-errors.png)
+
+If some error(s) was found, you should see something like this:
+
+![Typecheck command with errors](/img/contents/writings/avoid-typescript-errors-in-your-project-by-using-the-typescript-compiler/typecheck-with-errors.png)
+
+Now you can open the files with errors and fix them :)
+
+- First, we execute the `tsc` compiler
+- We pass the --project flag to explicitly tell the compiler that we want to typecheck the entire project using our specified config file, which is the tsconfig.json.
+- Lastly, we pass the --noEmit flag to say that we do not want to output the compiled JS files into our project. If we don't set this flag and, for example, we have a TS file located at `src/utils/boolToText.ts`, there would be created a file called `src/utils/boolToText.js`, which is the JavaScript version of the `src/utils/boolToText.ts` file outputted by the compiler.
+
+## Additional configuration you can use
+
+There are also some additional configurations I like to do to make sure my project is safe and sound, free from any errors.
+
+### Run on pre-commit with husky and lint-staged
+
+One thing I like to do is to configure my typecheck command with [lint-staged](https://github.com/okonet/lint-staged) and [husky](https://typicode.github.io/husky/) on pre-commit along with my `tests` and `eslint` verification.
+
+So, my `.lintstagedrc.json` file looks something like this:
+
+```json
+{
+  "*.{ts,tsx}": [
+    "eslint 'src/**' --fix",
+    "npm run test:staged"
+  ]
+}
+```
+
+And my `.husky/pre-commit` file looks like this:
+
+```bash
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx --no-install lint-staged
+npm run typecheck
+```
+
+This way, every time I commit something, it will do lint check, run my tests and typecheck my entire project.
+
+💡 __Notice:__ The reason why I'm not executing my `npm run typecheck` inside lint-staged is that, since lint-staged only runs staged files and passes the current file being checked by argument to the command being executed, we can't have a reference to the `tsconfig.json` file (with the --project flag) and a source file to check in the same command. If you do, you'll get a `TS5042: Option 'project' cannot be mixed with source files on a command line.` error. Passing `npm run typecheck` in the husky pre-commit hook separated from lint-staged will typecheck the entire project, and not just the staged files. It's not perfect, but it works! There's an [issue in the official TypeScript repository](https://github.com/microsoft/TypeScript/issues/27379) about this, in case you want to take a look.
+
+If you don't have lint-staged and husky installed yet, you can refer to their official documentation:
+
+- [lint-staged](https://github.com/okonet/lint-staged)
+- [husky](https://typicode.github.io/husky/)
+
+### Create a task on VSCode to watch for errors
+
+Another nice thing you can do is create a [VSCode task](https://code.visualstudio.com/docs/editor/tasks) to watch for errors in your project as you code.
+
+To do this:
+
+1. Open the command palette `(Cmd+Shift+P)` or `(Ctrl+Shift+P)`.
+2. Select `Tasks: Configure Task`.
+3. Select `tsc: watch - tsconfig.json`
+4. Make sure the `"noEmit"  : true` option is set in the "compilerOptions" section in your tsconfig.json so that `tsc` do not output `js` files all over your project.
+
+Now, there will be created a `.vscode/tasks.json` in your project with the following content:
+
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+    {
+      "type": "typescript",
+      "tsconfig": "tsconfig.json",
+      "option": "watch",
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
+      "group": "build",
+      "label": "tsc: watch - tsconfig.json""label": "tsc: watch - tsconfig.json""label": "tsc: watch - tsconfig.json""label": "tsc: watch - tsconfig.json""label": "tsc: watch - tsconfig.json""label": "tsc: watch - tsconfig.json""label": "tsc: watch - tsconfig.json""label": "tsc: watch - tsconfig.json"
+    }
+  ]
+}
+```
+
+5. Set a custom label if your want to.
+
+```json
+{
+    ...
+    "tasks": [
+    {
+      ...
+      "label": "Watch for TypeScript errors"
+    }
+  ]
+}
+```
+
+6. Now, you can open your command palette again and select `Tasks: Run Task`
+7. Select your `Watch for TypeScript errors` (or the name you chose) task.
+
+This will open a new terminal window with the execution of your task and it will keep watching for errors.
+
+![Executing task](/img/contents/writings/avoid-typescript-errors-in-your-project-by-using-the-typescript-compiler/executing-task.png)
+
+Congratulations. You are done creating your VSCode task :)
+
+## Conclusion
+
+Congratulations! Now you have an error-proof project, especially if you configured husky and lint-staged too.
+
+As always, improvements and/or corrections are welcome 😀.
+
+Have fun coding!
+
+## Further reading
+
+- [https://spin.atomicobject.com/2019/11/20/type-checking-typescript-visual-studio-code/](https://spin.atomicobject.com/2019/11/20/type-checking-typescript-visual-studio-code/)
+- [https://www.typescriptlang.org/docs/handbook/compiler-options.html](https://www.typescriptlang.org/docs/handbook/compiler-options.html)

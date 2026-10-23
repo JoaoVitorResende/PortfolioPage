@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Item /> should render correctly 1`] = `
+.c0 {
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+  border-bottom: 1px solid var(--color-textDarker);
+}
+
+.c1 {
+  color: var(--color-text);
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+<li
+  class="c0"
+>
+  <a
+    class="c1"
+    href="/item"
+  >
+    <div
+      class="c2"
+    >
+      Item
+    </div>
+  </a>
+</li>
+`;

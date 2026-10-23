@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://github.com/JoaoVitorResende
+
+# Sitemaps
+Sitemap: https://github.com/JoaoVitorResende/sitemap.xml

@@ -1,0 +1,55 @@
+import { Heading2, Heading3 } from 'components/Headings';
+import { Stack } from 'components/Stack';
+import { Tool, ToolProps } from 'components/Tool';
+import * as S from './styles';
+
+export function MyStack() {
+  const tools: ToolProps[] = [
+    { color: '#E34F26', name: 'HTML5' },
+    { color: '#1572B6', name: 'CSS3' },
+    { color: '#F7E018', name: 'JavaScript' },
+    { color: '#2D79C7', name: 'TypeScript' },
+    { color: '#80D8F7', name: 'React.js' },
+    { color: '#FFFFFF', name: 'Next.js' },
+    { color: '#4B32C3', name: 'ASP .NET CORE' },
+    { color: '#61DAFB', name: 'GOLANG' },
+    { color: '#333331', name: 'UNITY' },
+    { color: '#333331', name: 'MYSQL' },
+    { color: '#00FF00', name: 'MongoDB' },
+    { color: '#61DAFB', name: 'PostgreSQL' },
+  ];
+
+  const ecosystem: ToolProps[] = [
+    { color: '#4B32C3', name: 'ESLint' },
+    { color: '#F8BC45', name: 'Prettier' },
+    { color: '#059DFD', name: 'Tailwind' },
+    { color: '#F05033', name: 'Git' },
+    { color: '#FFFF00', name: 'Linux' },
+    { color: '#059DFD', name: 'Windowns' },
+    { color: '#FFFFFF', name: 'MAC' },
+  ];
+
+  return (
+    <Stack as="section" spacing="3rem">
+      <div>
+        <Heading2>My stack</Heading2>
+
+        <S.Tools>
+          {tools.map((tool) => (
+            <Tool key={tool.name} {...tool} />
+          ))}
+        </S.Tools>
+      </div>
+
+      <div>
+        <Heading3>Ecosystem</Heading3>
+
+        <S.Tools>
+          {ecosystem.map((tool) => (
+            <Tool key={tool.name} {...tool} />
+          ))}
+        </S.Tools>
+      </div>
+    </Stack>
+  );
+}

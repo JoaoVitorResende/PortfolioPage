@@ -35,7 +35,7 @@ function App({ Component, pageProps }: AppProps) {
           images: [
             {
               url: `${getAbsoluteUrl()}/img/card.jpg`,
-              secureUrl: `${getAbsoluteUrl()}/img/card.jpg`,
+              secureUrl: `${getAbsoluteUrl()}/img/card.png`,
               width: 1200,
               height: 630,
               alt: 'Full-stack software engineer.',
@@ -51,6 +51,7 @@ function App({ Component, pageProps }: AppProps) {
           {
             httpEquiv: 'content-type',
             content: 'text/html; charset=utf-8',
+
           },
         ]}
       />

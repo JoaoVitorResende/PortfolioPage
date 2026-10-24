@@ -51,7 +51,6 @@ function App({ Component, pageProps }: AppProps) {
           {
             httpEquiv: 'content-type',
             content: 'text/html; charset=utf-8',
-
           },
         ]}
       />
